@@ -1,24 +1,25 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
+
+func combos(s string) []string {
+	ret := []string{}
+	if len(s) == 1 {
+		ret = append(ret, strings.ToLower(string(s[0])))
+		ret = append(ret, strings.ToUpper(string(s[0])))
+	} else {
+		recursive := combos(s[1:])
+		for _, s2 := range recursive {
+			ret = append(ret, strings.ToLower(string(s[0])) + s2)
+			ret = append(ret, strings.ToUpper(string(s[0])) + s2)
+		}
+	}
+	return ret
+}
 
 func main() {
-	arr := []int{5, 9, 0, -11, -1, 5, 17, 8, 117, 5}
-	dup := []int{}
-	for _, v := range arr {
-		is_in_dup := false;
-		for _, x := range dup {
-			if v == x {
-				is_in_dup = true;
-			}
-		}
-		if !is_in_dup {
-			dup = append(dup, v)
-		}
-	}
-	
-	for _, v := range dup {
-		fmt.Printf("%d ", v);
-	}
-	fmt.Println("")
+	fmt.Println(combos("ab"))
 }
